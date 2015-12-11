@@ -23,8 +23,11 @@
 
 <script>
 	$("#list-directory-button").on("click",function(e){
+		var buttonClicked = $(this);
 		$.get( '/listDir',{}, function(data) {
-			console.log(data);
+			var outputDiv = buttonClicked.parents(".panel-heading").siblings(".panel-body").children(".output")
+			outputDiv.append(data);
+			outputDiv.scrollTop = outputDiv.scrollHeight;
 		});
 	});
 
