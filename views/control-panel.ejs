@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1>Control Panel</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				List Directory: <button type="button" class="btn btn-primary btn-xs pull-right" id="list-directory-button">Do Thing</button>
+			</div>
+			<div class="panel-body ">
+				<div class="output">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">&nbsp;</div>
+	<div class="col-md-4">&nbsp;</div>
+</div>
+
+
+<script>
+	$("#list-directory-button").on("click",function(e){
+		$.get( '/listDir',{}, function(data) {
+			console.log(data);
+		});
+	});
+
+</script>
