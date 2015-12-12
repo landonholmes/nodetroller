@@ -49,19 +49,19 @@ router.get('/',restrict, function(req, res, next) {
 router.get('/listDir',restrict, function(req, res){
     utils.run_cmd('ls',['-la'],function(r) {
         res.send(r);
-    },function(r){res.send(r)});
+    },function(r){console.log(r);});
 });
 
 router.get('/restartMinecraftServer',restrict, function(req, res){
     utils.run_cmd('sudo systemctl',['restart','minecraftserver'],function(r) {
         res.send(r);
-    },function(r){res.send(r)});
+    },function(r){console.log(r);});
 });
 
 router.get('/getStatusMinecraftServer',restrict, function(req, res){
     utils.run_cmd('systemctl',['status','minecraftserver'],function(r) {
         res.send(r);
-    },function(r){res.send(r)});
+    },function(r){console.log(r);});
 });
 
 
