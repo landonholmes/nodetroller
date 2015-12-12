@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 var utils = require('..//helpers/utils');
-var utils = require('..//helpers/pass');
 
 
 router.get('/', function(req, res, next) {
