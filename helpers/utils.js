@@ -1,5 +1,7 @@
 exports.run_cmd = function(cmd, args, callback, onErrCallback ) {
     var spawn = require('child_process').spawn;
+    console.log('cmd: ',cmd);
+    console.log('args: ',args);
     var child = spawn(cmd, args);
     var resp = "";
 
