@@ -21,7 +21,7 @@ router.get('/restartMinecraftServer', function(req, res){
     });
 });
 
-router.get('/statusMinecraftServer', function(req, res){
+router.get('/getStatusMinecraftServer', function(req, res){
     utils.run_cmd('systemctl',['status','minecraftserver'],function(r) {
         res.send(r);
     });
