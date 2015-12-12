@@ -22,7 +22,6 @@ router.post('/loginSubmit', function(req, res, next) {
     }
 
     pass.validatePassword(req.body.password,req.app.get('masterPassword'),function(result){ //try to validate their attempt
-        console.log('valdiation:',result);
         if (result==true) {
             req.session.loggedIn = true;
             res.redirect('/')
@@ -54,7 +53,7 @@ router.get('/listDir',restrict, function(req, res){
 });
 
 router.get('/restartMinecraftServer',restrict, function(req, res){
-    utils.run_cmd('systemctl',['restart','minecraftserver'],function(r) {
+    utils.run_cmd('sudo systemctl',['restart','minecraftserver'],function(r) {
         res.send(r);
     },function(r){res.send(r)});
 });
