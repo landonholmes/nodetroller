@@ -48,8 +48,14 @@
 	<div class="col-md-4">&nbsp;</div>
 </div>
 
-
+<script src="/js/control-panel/control-panel.js"></script>
 <script>
+	var PAGE = PAGE || {
+				statusMinecraftServerUnknown : $("#status-minecraftserver-unknown")
+				,statusMinecraftServerActive : $("#status-minecraftserver-active")
+				,statusMinecraftServerOffline : $("#status-minecraftserver-offline")
+			};
+
 	$('body').on("click","#clear-output-button",clearOutput);
 	$("#list-directory-button").on("click",listDirectory);
 	$("#restart-minecraftserver-button").on("click",restartMinecraftServer);
@@ -58,57 +64,5 @@
 		getStatusMinecraftServer();
 		setInterval(getStatusMinecraftServer,5000);
 	});
-
-	function clearOutput(e) {
-		var outputDiv = $(this).parents(".panel-footer").siblings(".panel-body").children(".output");
-		outputDiv.empty();
-	}
-
-	function listDirectory(e){
-		var buttonClicked = $(this);
-		$.get( '/listDir',{}, function(data) {
-			var outputDiv = buttonClicked.parents(".panel-footer").siblings(".panel-body").children(".output");
-			data = data.replace(/\n/g, "<br/>");
-			outputDiv.append(data+'<br />');
-			outputDiv.scrollTop(outputDiv[0].scrollHeight);
-		});
-	}
-
-
-	function restartMinecraftServer(e){
-		var buttonClicked = $(this);
-		$.get( '/restartMinecraftServer',{}, function(data) {
-			var outputDiv = buttonClicked.parents(".panel-footer").siblings(".panel-body").children(".output");
-			data = data.replace(/\n/g, "<br/>");
-			outputDiv.append(data+'<br />');
-			outputDiv.scrollTop(outputDiv[0].scrollHeight);
-		});
-	}
-
-	function getStatusMinecraftServer(e){
-		$.get( '/getStatusMinecraftServer',{}, function(data) {
-			var searchString = "Active: ";
-			var startIndex = data.indexOf(searchString);
-			var activeFlag = data.charAt(startIndex+searchString.length); //should be a for active or f for failed
-
-			if (activeFlag == 'a'){ //service active
-				console.log('active');
-				$("#status-minecraftserver-unknown").hide();
-				$("#status-minecraftserver-active").show();
-				$("#status-minecraftserver-offline").hide();
-			} else if (activeFlag == 'f') { //service stopped
-				console.log('failed');
-				$("#status-minecraftserver-unknown").hide();
-				$("#status-minecraftserver-active").hide();
-				$("#status-minecraftserver-offline").show();
-			} else {//total error
-				console.log('unkown');
-				$("#status-minecraftserver-unknown").show();
-				$("#status-minecraftserver-active").hide();
-				$("#status-minecraftserver-offline").hide();
-			}
-		});
-
-	}
-
 </script>
+
