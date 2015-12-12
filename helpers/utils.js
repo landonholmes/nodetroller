@@ -5,7 +5,7 @@ exports.run_cmd = function(cmd, args, callBack ) {
 
     child.stdout.on('data', function (buffer) { resp += buffer.toString() });
     child.stdout.on('end', function() { callBack (resp) });
-    child.on('error',function(err){throw err;});
+    child.on('error',function(err){callBack(err);});
 };
 
 /* Example usage: from http://stackoverflow.com/a/17466459

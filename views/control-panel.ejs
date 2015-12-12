@@ -21,7 +21,7 @@
 			</div>
 			<div class="panel-footer">
 				<button type="button" class="btn btn-primary btn-xs" id="restart-minecraftserver-button">Restart</button>
-				<button type="button" class="btn btn-primary btn-xs" id="clear-output-button pull-right">Clear</button>
+				<button type="button" class="btn btn-primary btn-xs pull-right" id="clear-output-button pull-right">Clear</button>
 			</div>
 		</div>
 	</div>
@@ -30,8 +30,7 @@
 			<div class="panel-heading">
 				List Directory:
 				<div class="pull-right">
-					<button type="button" class="btn btn-primary btn-xs" id="clear-output-button">Clear</button>&nbsp;
-					<button type="button" class="btn btn-primary btn-xs" id="list-directory-button">Do Thing</button>
+
 				</div>
 			</div>
 			<div class="panel-body ">
@@ -39,6 +38,10 @@
 
 				</div>
 
+			</div>
+			<div class="panel-footer">
+				<button type="button" class="btn btn-primary btn-xs" id="list-directory-button">Do Thing</button>
+				<button type="button" class="btn btn-primary btn-xs pull-right" id="clear-output-button">Clear</button>&nbsp;
 			</div>
 		</div>
 	</div>
@@ -57,14 +60,14 @@
 	});
 
 	function clearOutput(e) {
-		var outputDiv = $(this).parents(".panel-heading").siblings(".panel-body").children(".output");
+		var outputDiv = $(this).parents(".panel-footer").siblings(".panel-body").children(".output");
 		outputDiv.empty();
 	}
 
 	function listDirectory(e){
 		var buttonClicked = $(this);
 		$.get( '/listDir',{}, function(data) {
-			var outputDiv = buttonClicked.parents(".panel-heading").siblings(".panel-body").children(".output");
+			var outputDiv = buttonClicked.parents(".panel-footer").siblings(".panel-body").children(".output");
 			data = data.replace(/\n/g, "<br/>");
 			outputDiv.append(data+'<br />');
 			outputDiv.scrollTop(outputDiv[0].scrollHeight);
