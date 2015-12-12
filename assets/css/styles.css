@@ -1,7 +1,16 @@
 * {
     border-radius: 0 !important;
 }
+.control-panel > .panel-body{
+    padding:0;
+}
+.control-panel > .panel-body > .output{
+    padding: 10px 10px 0 10px;
+}
 .output {
-    min-height: 150px;
+    height: 200px;
+    width: 100%;
     overflow-y: scroll;
+    overflow-x: scroll;
+    white-space: nowrap;
 }

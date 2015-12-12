@@ -5,14 +5,19 @@
 </div>
 <div class="row">
 	<div class="col-md-4">
-		<div class="panel panel-default">
+		<div class="panel panel-default control-panel">
 			<div class="panel-heading">
-				List Directory: <button type="button" class="btn btn-primary btn-xs pull-right" id="list-directory-button">Do Thing</button>
+				List Directory:
+				<div class="pull-right">
+					<button type="button" class="btn btn-primary btn-xs" id="clear-output-button">Clear</button>&nbsp;
+					<button type="button" class="btn btn-primary btn-xs" id="list-directory-button">Do Thing</button>
+				</div>
 			</div>
 			<div class="panel-body ">
 				<div class="output">
 
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -22,13 +27,23 @@
 
 
 <script>
-	$("#list-directory-button").on("click",function(e){
+	$('body').on("click","#clear-output-button",clearOutput);
+	$("#list-directory-button").on("click",listDirectory);
+
+	function clearOutput(e) {
+		var outputDiv = $(this).parents(".panel-heading").siblings(".panel-body").children(".output");
+		console.log(outputDiv);
+		outputDiv.empty();
+	}
+
+	function listDirectory(e){
 		var buttonClicked = $(this);
 		$.get( '/listDir',{}, function(data) {
-			var outputDiv = buttonClicked.parents(".panel-heading").siblings(".panel-body").children(".output")
-			outputDiv.append(data);
-			outputDiv.scrollTop = outputDiv.scrollHeight;
+			var outputDiv = buttonClicked.parents(".panel-heading").siblings(".panel-body").children(".output");
+			data = data.replace(/\n/g, "<br/>");
+			outputDiv.append(data+'<br />');
+			outputDiv.scrollTop(outputDiv[0].scrollHeight);
 		});
-	});
+	}
 
 </script>

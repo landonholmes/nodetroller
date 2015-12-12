@@ -9,14 +9,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/listDir', function(req, res){
-    listDir(res); //list dir will send response
-    //res.send('here');
+    listDir(function(r){
+        res.send(r);
+    });
 });
 
 
-function listDir(res) {
+function listDir(callback) {
     utils.run_cmd('ls',['-la'],function(r) {
-        res.send(r);
+        callback(r);
     });
 }
 
