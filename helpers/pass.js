@@ -1,41 +1,30 @@
-// check out https://github.com/visionmedia/node-pwd
-
 var crypto = require('crypto');
+var defaultLength = 128;
+var defaultIterations = 10000;
 
-/**
- * Bytesize.
- */
+exports.hash =  function(pass,callback) {
+    crypto.randomBytes(defaultLength, function (err, salt) {
+        if (err) {throw err;}
+        exports.hashWithOptions(pass,defaultIterations,salt,callback);
+    });
+};
 
-var len = 128;
+exports.hashWithOptions =  function(pass,iterations,salt,callback) {
+    crypto.pbkdf2(pass, salt, iterations, 256, function (err, hash) {
+            if (err) { throw err; }
+            var hashed = (new Buffer(hash).toString('hex'));
+            salt = salt.toString('hex');
+            var hashedPassword = iterations + ':' + salt + ':' + hashed;
+            callback(null,hashedPassword);
+    });
+};
 
-/**
- * Iterations. ~300ms
- */
-
-var iterations = 12000;
-
-/**
- * Hashes a password with optional `salt`, otherwise
- * generate a salt for `pass` and invoke `fn(err, salt, hash)`.
- *
- * @param {String} password to hash
- * @param {String} optional salt
- * @param {Function} callback
- * @api public
- */
-
-exports.hash = function (pwd, salt, fn) {
-    if (3 == arguments.length) {
-        crypto.pbkdf2(pwd, salt, iterations, len, fn);
-    } else {
-        fn = salt;
-        crypto.randomBytes(len, function(err, salt){
-            if (err) return fn(err);
-            salt = salt.toString('base64');
-            crypto.pbkdf2(pwd, salt, iterations, len, function(err, hash){
-                if (err) return fn(err);
-                fn(null, salt, hash);
-            });
-        });
-    }
+exports.validatePassword = function(attemptedPassword,storedPassword,callback) {
+    var parts = storedPassword.split(":"); //get the parts of the stored password
+    if (parts.length != 3) { console.log('comparison password does not have 3 parts');callback(false);} //crap out if the stored password does not have the right parts
+    var storedPasswordIterations = parseInt(parts[0]); //get the stored password iterations
+    var storedPasswordSalt = parts[1]; //get the stored password salt
+    exports.hashWithOptions(attemptedPassword,storedPasswordIterations,storedPasswordSalt,function(err,e){ //encode our attempted password in the same way as the stored one, then compare
+        callback(e==storedPassword)
+    });
 };

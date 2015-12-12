@@ -1,0 +1,31 @@
+<div  style="text-align: center;">
+	<div class="col-sm-4 col-sm-offset-4"  style="margin-top: 3%;">
+		<form class="form-inline" method="POST" action="/loginSubmit">
+			<fieldset>
+				<div class="panel panel-primary" >
+					<legend class="panel-heading panel-title">Log In</legend>
+					<div class="panel-body">
+						<div class="form-group">
+							<div class="controls input-group">
+								<div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+								<input type="password" id="password" name="password" class="input form-control" placeholder="Password" value="" />
+							</div>
+						</div><br /><br />
+						<div class="form-group">
+							<div class="controls">
+								<input type="submit" class="btn btn-default" value="Login" />
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<span class="label label-danger"><%= message %></span>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<script>
+	(function(){$('#username').focus();}());
+</script>
