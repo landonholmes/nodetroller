@@ -1,18 +1,22 @@
-exports.run_cmd = function(cmd, args, callback, onErrCallback ) {
-    var spawn = require('child_process');
+exports.run_cmd = function(sudo, cmd, args, callback, onErrCallback ) {
+    var childProcess = require('child_process');
 
-    command = cmd;
-    for (var i=0; i<args.length;i++) {
-        command += " "+args[i];
+    if (sudo) {
+        var command = "sudo"+cmd;
+        for (var i=0; i<args.length;i++) {
+            command += " "+args[i];
+        }
+        console.log('cmd: ',command);
+        var child = childProcess.exec(command);
+    } else {
+        var child = childProcess.spawn(cmd, args);
     }
-    console.log('cmd: ',command);
-    var child = spawn.exec(command);
+
     var resp = "";
 
     child.stdout.on('data', function (buffer) { resp += buffer.toString() });
     child.stdout.on('end', function() { callback (resp) });
     child.on('error',function(err){
-        console.log('run_cmd error: ',err);
         if (onErrCallback != undefined) {
             onErrCallback(err);
         } else {
