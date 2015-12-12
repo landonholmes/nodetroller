@@ -6,10 +6,11 @@ exports.run_cmd = function(cmd, args, callback, onErrCallback ) {
     child.stdout.on('data', function (buffer) { resp += buffer.toString() });
     child.stdout.on('end', function() { callback (resp) });
     child.on('error',function(err){
+        console.log('run_cmd error: ',err);
         if (onErrCallback != undefined) {
             onErrCallback(err);
         } else {
-            throw err;
+            //throw err;
         }
     });
 };

@@ -69,7 +69,6 @@ function restrict(req, res, next) {
     if (req.session.loggedIn) {
         next();
     } else {
-        req.session.error = 'Access denied!';
         res.redirect('/login');
     }
 }
