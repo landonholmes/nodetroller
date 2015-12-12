@@ -7,6 +7,25 @@
 	<div class="col-md-4">
 		<div class="panel panel-default control-panel">
 			<div class="panel-heading">
+				Minecraft Server:
+				<div class="pull-right">
+
+				</div>
+			</div>
+			<div class="panel-body ">
+				<div class="output">
+
+				</div>
+			</div>
+			<div class="panel-footer">
+				<button type="button" class="btn btn-primary btn-xs" id="restart-minecraftserver-button">Restart</button>
+				<button type="button" class="btn btn-primary btn-xs" id="clear-output-button pull-right">Clear</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default control-panel">
+			<div class="panel-heading">
 				List Directory:
 				<div class="pull-right">
 					<button type="button" class="btn btn-primary btn-xs" id="clear-output-button">Clear</button>&nbsp;
@@ -22,17 +41,16 @@
 		</div>
 	</div>
 	<div class="col-md-4">&nbsp;</div>
-	<div class="col-md-4">&nbsp;</div>
 </div>
 
 
 <script>
 	$('body').on("click","#clear-output-button",clearOutput);
 	$("#list-directory-button").on("click",listDirectory);
+	$("#restart-minecraftserver-button").on("click",restartMinecraftServer);
 
 	function clearOutput(e) {
 		var outputDiv = $(this).parents(".panel-heading").siblings(".panel-body").children(".output");
-		console.log(outputDiv);
 		outputDiv.empty();
 	}
 
@@ -40,6 +58,17 @@
 		var buttonClicked = $(this);
 		$.get( '/listDir',{}, function(data) {
 			var outputDiv = buttonClicked.parents(".panel-heading").siblings(".panel-body").children(".output");
+			data = data.replace(/\n/g, "<br/>");
+			outputDiv.append(data+'<br />');
+			outputDiv.scrollTop(outputDiv[0].scrollHeight);
+		});
+	}
+
+
+	function restartMinecraftServer(e){
+		var buttonClicked = $(this);
+		$.get( '/restartMinecraftServer',{}, function(data) {
+			var outputDiv = buttonClicked.parents(".panel-footer").siblings(".panel-body").children(".output");
 			data = data.replace(/\n/g, "<br/>");
 			outputDiv.append(data+'<br />');
 			outputDiv.scrollTop(outputDiv[0].scrollHeight);
