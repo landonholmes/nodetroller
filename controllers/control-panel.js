@@ -55,7 +55,7 @@ router.get('/listDir',restrict, function(req, res){
 router.get('/restartMinecraftServer',restrict, function(req, res){
     utils.run_cmd(true,'systemctl',['restart','minecraftserver'],function(r) {
         res.send(r);
-    },function(err){res.send(err);});
+    },function(err){console.log(err);});
 });
 
 router.get('/getStatusMinecraftServer',restrict, function(req, res){
