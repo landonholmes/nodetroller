@@ -8,7 +8,11 @@ var crypto = require('crypto');
 
 
 router.get('/login', function(req, res, next) {
-    res.render('_includes/default-layout', { title: 'Login', page: 'login',message:''});
+    var messageType = req.session.messageType || ""; //see if there is anything in session
+    var message = req.session.message || "";
+    req.session.messageType = ""; //clear out session variables
+    req.session.message = "";
+    res.render('_includes/default-layout', { title: 'Login', page: 'login',messageType:messageType,message:message});
 });
 
 router.post('/loginSubmit', function(req, res, next) {
@@ -24,12 +28,20 @@ router.post('/loginSubmit', function(req, res, next) {
             res.redirect('/')
         } else {
             req.session.loggedIn = false;
+            req.session.messageType = "danger";
+            req.session.message = "Bad login. Try again.";
             res.redirect('/login');
         }
     });
     //res.send('Authorizing...');
 });
 router.get('/loginSubmit', function(req, res, next) {res.redirect('/login');}); //don't allow get methods to loginSubmit
+router.get('/logout', function(req, res, next) {
+    req.session.loggedIn = false; //clear session
+    req.session.messageType = "success";
+    req.session.message = "You have successfully logged out.";
+    res.redirect('/login');
+});
 
 router.get('/',restrict, function(req, res, next) {
     res.render('_includes/default-layout', { title: 'Nodetroller', page: 'control-panel/control-panel'});
