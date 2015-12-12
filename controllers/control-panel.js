@@ -53,7 +53,7 @@ router.get('/listDir',restrict, function(req, res){
 });
 
 router.get('/restartMinecraftServer',restrict, function(req, res){
-    utils.run_cmd(true,'systemctl',['restart','minecraftserver'],function(r) {
+    utils.run_cmd(false,'sudo systemctl',['restart','minecraftserver'],function(r) {
         res.send(r);
     },function(err){console.log(err);});
 });
