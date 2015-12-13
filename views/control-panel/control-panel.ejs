@@ -8,10 +8,14 @@
 		<div class="panel panel-default control-panel">
 			<div class="panel-heading">
 				Minecraft Server:
-				<div class="pull-right">
-					<span class="label label-warning" id="status-minecraftserver-unknown">Unkown</span>
-					<span class="label label-success" id="status-minecraftserver-active" style="display: none;">Active</span>
-					<span class="label label-danger" id="status-minecraftserver-offline" style="display: none;">Offline</span>
+				<div class="pull-right" style="margin-top:-11px;">
+					<span class="label label-warning" id="status-minecraftserver-unknown">Status: Unknown</span>
+					<span class="label label-success" id="status-minecraftserver-active" style="display: none;">Status: Active</span>
+					<span class="label label-danger" id="status-minecraftserver-offline" style="display: none;">Status: Offline</span>
+					<br />
+					<span class="label label-warning" id="enabled-minecraftserver-unknown">Enabled: Unknown</span>
+					<span class="label label-success" id="enabled-minecraftserver-enabled" style="display: none;">Enabled: Enabled</span>
+					<span class="label label-danger" id="enabled-minecraftserver-disabled" style="display: none;">Enabled: Disabled</span>
 				</div>
 			</div>
 			<div class="panel-body ">
@@ -20,7 +24,13 @@
 				</div>
 			</div>
 			<div class="panel-footer">
-				<button type="button" class="btn btn-primary btn-xs" id="restart-minecraftserver-button">Restart</button>
+				<button type="button" class="btn btn-success btn-xs" id="start-minecraftserver-button">Start</button>
+				<button type="button" class="btn btn-danger btn-xs" id="stop-minecraftserver-button">Stop</button>
+				<button type="button" class="btn btn-info btn-xs pull-right" id="restart-minecraftserver-button">Restart</button>
+				<br />
+				<br />
+				<button type="button" class="btn btn-success btn-xs" id="enable-minecraftserver-button">Enable</button>
+				<button type="button" class="btn btn-danger btn-xs" id="disable-minecraftserver-button">Disable</button>
 				<button type="button" class="btn btn-primary btn-xs pull-right" id="clear-output-button pull-right">Clear</button>
 			</div>
 		</div>
@@ -54,11 +64,18 @@
 				statusMinecraftServerUnknown : $("#status-minecraftserver-unknown")
 				,statusMinecraftServerActive : $("#status-minecraftserver-active")
 				,statusMinecraftServerOffline : $("#status-minecraftserver-offline")
+				,enabledMinecraftServerUnknown : $("#enabled-minecraftserver-unknown")
+				,enabledMinecraftServerEnable : $("#enabled-minecraftserver-enabled")
+				,enabledMinecraftServerDisabled : $("#enabled-minecraftserver-disabled")
 			};
 
 	$('body').on("click","#clear-output-button",clearOutput);
 	$("#list-directory-button").on("click",listDirectory);
 	$("#restart-minecraftserver-button").on("click",restartMinecraftServer);
+	$("#stop-minecraftserver-button").on("click",stopMinecraftServer);
+	$("#start-minecraftserver-button").on("click",startMinecraftServer);
+	$("#enable-minecraftserver-button").on("click",enableMinecraftServer);
+	$("#disable-minecraftserver-button").on("click",disableMinecraftServer);
 
 	$(document).ready(function(e){
 		getStatusMinecraftServer();

@@ -53,7 +53,31 @@ router.get('/listDir',restrict, function(req, res){
 });
 
 router.get('/restartMinecraftServer',restrict, function(req, res){
-    utils.run_cmd(false,'sudo systemctl',['restart','minecraftserver'],function(r) {
+    utils.run_cmd(true,'systemctl',['restart','minecraftserver'],function(r) {
+        res.send(r);
+    },function(err){console.log(err);});
+});
+
+router.get('/stopMinecraftServer',restrict, function(req, res){
+    utils.run_cmd(true,'systemctl',['stop','minecraftserver'],function(r) {
+        res.send(r);
+    },function(err){console.log(err);});
+});
+
+router.get('/startMinecraftServer',restrict, function(req, res){
+    utils.run_cmd(true,'systemctl',['start','minecraftserver'],function(r) {
+        res.send(r);
+    },function(err){console.log(err);});
+});
+
+router.get('/enableMinecraftServer',restrict, function(req, res){
+    utils.run_cmd(true,'systemctl',['enable','minecraftserver'],function(r) {
+        res.send(r);
+    },function(err){console.log(err);});
+});
+
+router.get('/disableMinecraftServer',restrict, function(req, res){
+    utils.run_cmd(true,'systemctl',['disable','minecraftserver'],function(r) {
         res.send(r);
     },function(err){console.log(err);});
 });
