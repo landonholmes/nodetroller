@@ -13,12 +13,12 @@ app.set('masterPassword','10000:e1767d6836622fb75b780fc620a65f76b72533fe15ac0035
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(favicon(path.join(__dirname,'assets','img','favicon.ico')));
+app.use(favicon(path.join(__dirname,'public','img','favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Populates req.session
 app.use(session({
@@ -28,7 +28,7 @@ app.use(session({
 }));
 
 /*one file to set up routes*/
-var routeHandler = require('./controllers/_route-handler');
+var routeHandler = require('./routes/_route-handler');
 routeHandler.init(app);
 
 // catch 404 and forward to error handler
