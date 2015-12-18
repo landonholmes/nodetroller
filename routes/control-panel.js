@@ -85,7 +85,7 @@ router.get('/disableMinecraftServer',restrict, function(req, res){
 router.get('/getStatusMinecraftServer',restrict, function(req, res){
     utils.run_cmd(false,'systemctl',['status','minecraftserver'],function(r) {
         res.send(r);
-    },function(err){res.send(err);});
+    },function(err){console.log(err);});
 });
 
 
